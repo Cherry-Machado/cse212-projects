@@ -11,22 +11,6 @@ public class Program
 
         Console.WriteLine("Hello Sandbox World!");
 
-        DoSomething(79);
-
-
-        static void DoSomething(int n)
-        {
-            for (int i = 1; i < n; i++)
-            {
-                int resi = n % i;
-                if (resi == 0)
-                {
-                    Console.WriteLine(i);
-                }
-                ;
-
-            }
-        }
     }
 
 }

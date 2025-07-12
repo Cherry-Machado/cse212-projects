@@ -44,7 +44,7 @@
         catch (IndexOutOfRangeException) {
             Console.WriteLine("I got the exception as expected.");
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: None :)
     }
 
     private readonly List<int> _queue = new();
@@ -53,8 +53,10 @@
     /// Enqueue the value provided into the queue
     /// </summary>
     /// <param name="value">Integer value to add to the queue</param>
-    private void Enqueue(int value) {
-        _queue.Insert(0, value);
+    private void Enqueue(int value)
+    {
+       // _queue.Insert(0, value);
+        _queue.Add(value); // Defect 2 - Need to add to the end of the queue
     }
 
     /// <summary>
@@ -65,9 +67,9 @@
     private int Dequeue() {
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
-
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        // var value = _queue[1];
+        var value = _queue[0]; // Defect 1 - Need to remove from the front of the queue
+        _queue.RemoveAt(0);
         return value;
     }
 }

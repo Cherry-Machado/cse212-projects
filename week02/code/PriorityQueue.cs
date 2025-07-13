@@ -1,4 +1,49 @@
-﻿public class PriorityQueue
+﻿using System;
+using System.Collections.Generic;
+
+public class PriorityQueue<T> {
+    private readonly List<PriorityItem<T>> _queue = new();
+
+    public int Count => _queue.Count;
+
+    /// <summary>
+    /// Add a new value to the queue with an associated priority.
+    /// </summary>
+    /// <param name="value">The value to add</param>
+    /// <param name="priority">The priority of the value</param>
+    public void Enqueue(T value, int priority) {
+        _queue.Add(new PriorityItem<T>(value, priority));
+    }
+
+    /// <summary>
+    /// Remove the value with the highest priority from the queue.
+    /// If two items have the same priority, the one that was added
+    /// first will be removed.
+    /// </summary>
+    /// <returns>The value of the removed item.</returns>
+    public T Dequeue() {
+        if (Count == 0)
+            throw new InvalidOperationException("The queue is empty.");
+
+        // Find the index of the item with the highest priority to remove
+        var highPriorityIndex = 0;
+        for (var index = 1; index < _queue.Count; index++) {
+            // Use ">" instead of ">=" to ensure that the first item
+            // with the highest priority is selected, fulfilling the
+            // FIFO (First-In, First-Out) requirement for ties.
+            if (_queue[index].Priority > _queue[highPriorityIndex].Priority) {
+                highPriorityIndex = index;
+            }
+        }
+
+        // Remove the item with the highest priority
+        var item = _queue[highPriorityIndex];
+        _queue.RemoveAt(highPriorityIndex);
+        return item.Value;
+    }
+}
+
+/* public class PriorityQueue
 {
     private List<PriorityItem> _queue = new();
 
@@ -24,14 +69,20 @@
 
         // Find the index of the item with the highest priority to remove
         var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
+        for (int index = 1; index < _queue.Count; index++)
         {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
+            // Use ">" instead of ">=" to ensure that the first item
+            // with the highest priority is selected, fulfilling the
+            // FIFO (First-In, First-Out) requirement for ties.
+            if (_queue[index].Priority > _queue[highPriorityIndex].Priority)
+            {
                 highPriorityIndex = index;
+            }
         }
 
         // Remove and return the item with the highest priority
         var value = _queue[highPriorityIndex].Value;
+        _queue.RemoveAt(highPriorityIndex);
         return value;
     }
 
@@ -56,4 +107,4 @@ internal class PriorityItem
     {
         return $"{Value} (Pri:{Priority})";
     }
-}
+} */

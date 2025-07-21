@@ -1,4 +1,6 @@
-﻿public class DuplicateCounter
+﻿using System.Collections.Generic;
+
+public class DuplicateCounter
 {
     //Count how many duplicates are in a collection of data.
 
@@ -19,12 +21,46 @@
         ];
 
         Console.WriteLine($"Number of items in the collection: {data.Length}");
-        Console.WriteLine($"Number of duplicates : {CountDuplicates(data)}");
+        Console.WriteLine($"Number of duplicates: {CountDuplicates(data)}");
+        Console.WriteLine($"Number of duplicates (alternate): {CountDuplicatesAlternate(data)}");
     }
 
+    /// <summary>
+    /// Counts the total number of duplicate occurrences in the data.
+    /// For example, for [1, 2, 2, 3, 3, 3], it will return 3.
+    /// The time complexity is O(n) because it iterates through the data once.
+    /// </summary>
+
+
     private static int CountDuplicates(int[] data)
+     {
+        var uniqueItems = new HashSet<int>();
+        var duplicateCount = 0;
+
+        foreach (var x in data)
+        {
+            // The Add method of a HashSet returns false if the item already exists.
+            // This is an efficient way to check for and count duplicates in one step.
+            if (!uniqueItems.Add(x)) {
+                duplicateCount++;
+            }
+        }
+
+        return duplicateCount;
+    }
+
+    private static int CountDuplicatesAlternate(int[] data)
     {
-        // Add code here.
-        return 0;
+        var unique = new HashSet<int>(data);
+        var orderedItems = unique.OrderBy(x => x);
+        Console.WriteLine("Unique items in sorted order" + "(" + unique.Count + "): ");
+        foreach (var item in orderedItems)
+        {
+            Console.Write(item + ", ");
+        }
+        Console.WriteLine();
+        // This method creates a HashSet from the data, which automatically filters out duplicates.
+        // It then calculates the number of duplicates by subtracting the count of unique items from the
+        return data.Length - unique.Count;
     }
 }

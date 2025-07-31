@@ -176,7 +176,7 @@ public class LinkedList : IEnumerable<int>
         // Start at the head of the list.
         Node? curr = _head;
         // Iterate through the entire list to find all occurrences.
-        while (curr is not null)
+        while (curr is not null) // Loop until we reach the end of the list.
         {
             // If the current node's data matches the old value...
             if (curr.Data == oldValue)

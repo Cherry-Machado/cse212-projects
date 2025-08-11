@@ -68,7 +68,7 @@ public class BinarySearchTree : IEnumerable<int>
     /// <summary>
     /// Iterate backward through the BST.
     /// </summary>
-    public IEnumerable Reverse()
+    /* public IEnumerable Reverse()
     {
         var numbers = new List<int>();
         TraverseBackward(_root, numbers);
@@ -76,16 +76,29 @@ public class BinarySearchTree : IEnumerable<int>
         {
             yield return number;
         }
-    }
+    } */
 
-    private void TraverseBackward(Node? node, List<int> values)
+    public IEnumerable<int> Reverse()
     {
-        // This is a reverse in-order traversal (Right, Node, Left).
-        if (node is not null)
+        return TraverseBackward(_root);
+    }
+    
+    private IEnumerable<int> TraverseBackward(Node? node)
+    {
+        if (node is null)
+            yield break;
+
+        // 1. Traverse the right subtree (larger values)
+        foreach (var value in TraverseBackward(node.Right))
         {
-            TraverseBackward(node.Right, values);
-            values.Add(node.Data);
-            TraverseBackward(node.Left, values);
+            yield return value;
+        }
+        // 2. Visit the node itself
+        yield return node.Data;
+        // 3. Traverse the left subtree (smaller values)
+        foreach (var value in TraverseBackward(node.Left))
+        {
+            yield return value;
         }
     }
 
@@ -93,20 +106,22 @@ public class BinarySearchTree : IEnumerable<int>
     /// Get the height of the tree
     /// </summary>
     public int GetHeight()
-    {
-        if (_root is null)
-            return 0;
-        return _root.GetHeight();
-    }
-
-    public override string ToString()
-    {
-        return "<Bst>{" + string.Join(", ", this) + "}";
-    }
+{
+    if (_root is null)
+        return 0;
+    return _root.GetHeight();
 }
 
-public static class IntArrayExtensionMethods {
-    public static string AsString(this IEnumerable array) {
+public override string ToString()
+{
+    return "<Bst>{" + string.Join(", ", this) + "}";
+}
+}
+
+public static class IntArrayExtensionMethods
+{
+    public static string AsString(this IEnumerable array)
+    {
         return "<IEnumerable>{" + string.Join(", ", array.Cast<int>()) + "}";
     }
 }

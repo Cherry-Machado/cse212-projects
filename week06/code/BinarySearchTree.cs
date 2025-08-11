@@ -68,15 +68,6 @@ public class BinarySearchTree : IEnumerable<int>
     /// <summary>
     /// Iterate backward through the BST.
     /// </summary>
-    /* public IEnumerable Reverse()
-    {
-        var numbers = new List<int>();
-        TraverseBackward(_root, numbers);
-        foreach (var number in numbers)
-        {
-            yield return number;
-        }
-    } */
 
     public IEnumerable<int> Reverse()
     {

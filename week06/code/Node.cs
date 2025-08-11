@@ -11,8 +11,6 @@ public class Node
 
     public void Insert(int value)
     {
-        // TODO Start Problem 1
-
         if (value < Data)
         {
             // Insert to the left
@@ -21,7 +19,9 @@ public class Node
             else
                 Left.Insert(value);
         }
-        else
+        // If the value is greater, insert to the right.
+        // If the value is equal, do nothing (no duplicates).
+        else if (value > Data)
         {
             // Insert to the right
             if (Right is null)
@@ -33,13 +33,21 @@ public class Node
 
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        // Base case: If the current node's data matches the value, we've found it.
+        if (value == Data)
+            return true;
+
+        // If the value is smaller, search the left subtree.
+        if (value < Data)
+            return Left is not null && Left.Contains(value);
+        // If the value is larger, search the right subtree.
+        return Right is not null && Right.Contains(value);
     }
 
     public int GetHeight()
     {
-        // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        // The height of the tree rooted at this node is 1 (for this node)
+        // plus the height of the taller of the two subtrees.
+        return 1 + Math.Max(Left?.GetHeight() ?? 0, Right?.GetHeight() ?? 0);
     }
 }
